@@ -13,34 +13,32 @@
         <title>TamaStudi</title>
     </head>
     <body>
-        <button class="game">jouer</button>
-        <button class="reload hidden">Recommencer</button>
         <div class="vitals hidden js-vitals">
             <ul class="vitals__list">
                 <li class="vitals__item">
                     <p class="vitals__subtitle">Faim</p>
-                    <p class="vitals__number mood">0</p>
+                    <p class="vitals__number js-score js-score--eat">0</p>
                     <p class="vitals__mention">/ 5</p>
                 </li>
                 <li class="vitals__item">
                     <p class="vitals__subtitle">Envie de jouer</p>
-                    <p class="vitals__number mood">0</p>
+                    <p class="vitals__number js-score js-score--play">0</p>
                     <p class="vitals__mention">/ 5</p>
                 </li>
                 <li class="vitals__item">
                     <p class="vitals__subtitle">Propreté</p>
-                    <p class="vitals__number mood">0</p>
+                    <p class="vitals__number js-score js-score--clean">0</p>
                     <p class="vitals__mention">/ 5</p>
                 </li>
                 <li class="vitals__item">
                     <p class="vitals__subtitle">Humeur</p>
-                    <p class="vitals__number mood">0</p>
+                    <p class="vitals__number">0</p>
                     <p class="vitals__mention">/ 5</p>
                 </li>
                 <li class="vitals__item">
                     <p class="vitals__subtitle">Durée de vie</p>
-                    <p class="vitals__number mood">0</p>
-                    <p class="vitals__mention">de <span></span></p>
+                    <p class="vitals__number">0</p>
+                    <p class="vitals__mention">de <span class="js-name"></span></p>
                 </li>
             </ul>
         </div>
@@ -51,7 +49,7 @@
                     Tamastudi&nbsp;!
                 </h1>
             <div class="tamastudi__screen">
-                <ul class="tamastudi__container-actions hidden">
+                <ul class="tamastudi__container-actions js-actions hidden">
                     <li class="tamastudi__actions">🍖</li>
                     <li class="tamastudi__actions">🎳</li>
                     <li class="tamastudi__actions">🚽</li>
@@ -60,14 +58,13 @@
                 <div class="tamastudi__character js-character">🥚</div>
             </div>
             <div class="tamastudi__container-buttons">
-                <button class="tamastudi__button" data-direction="left"></button>
-                <button class="tamastudi__button" data-direction="center"></button>
-                <button class="tamastudi__button" data-direction="right"></button>
+                <button class="tamastudi__button js-button" data-direction="left"></button>
+                <button class="tamastudi__button js-button" data-direction="center"></button>
+                <button class="tamastudi__button js-button" data-direction="right"></button>
             </div>
             </div>
         </div>
 
-        <!-- <script src="script.js"></script> -->
-        <script src="script-copy.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>
