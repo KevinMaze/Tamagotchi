@@ -13,7 +13,7 @@ Ensuite il devient un "grand" avec une humeur variable
 Ses envies :
 - 😋 : faim, aléatoire minimum 30 sec et max 3 minutes
 - 🥱 : jouer, aléatoire minimum 30 sec et max 3 minutes
-- 💩 : caca, aléatoire minimum 30 sec et max 1.30 minutes après avoir mangé
+- 💩 : caca, aléatoire minimum 30 sec et max 1.30 minutes uniquement après avoir mangé
 */
 
 /* PHASE 0 : lancer le jeu 
@@ -45,8 +45,7 @@ const birth = () => {
     // 1) : demander le prénom
     const tamaName = prompt("Quel est le prénom de votre Tamastudi ?");
     // 2) : éclore l'oeuf
-    const character = document.querySelector(".js-character");
-    character.textContent = "🐣";
+    showInScreen("🐣");
     // 3) : afficher les vitals
     const vitals = document.querySelector(".js-vitals");
     vitals.classList.remove("hidden");
@@ -61,15 +60,67 @@ const birth = () => {
     // 6) : faire apparaitre les actions
     const actions = document.querySelector(".js-actions");
     actions.classList.remove("hidden");
+    // 7) appel de la fonction pour le faire grandir
+    evolve();
 };
 
 /* PHASE 2 : faire grandir le tama 
 1) attendre que notre tamastudi ait une première envie
 2) il devient un "grand"
 */
-setTimeout(() => {
-    
-}, 3000);
+const evolve = () => {
+    // 1) attendre que notre tamastudi ait une première envie
+    const functionToExecute = () => {
+        showInScreen("🥰")
+    };
+    wantsTo(functionToExecute);
+};
 
-// Lance la fonction de dénut de mon tama
+/*SES ENVIES :
+- 😋 : faim, aléatoire minimum 30 sec et max 3 minutes
+- 🥱 : jouer, aléatoire minimum 30 sec et max 3 minutes
+- 💩 : caca, aléatoire minimum 30 sec et max 1.30 minutes uniquement après avoir mangé 
+1) créer une fonction qu'on va pouvoir apeler plus tard dans notre code
+2) stocker les envies de mon tama dans une variable
+3) avec une settimeout on va faire apparaitre une envie aléatoire
+4) la durée du settimeout est dynamique et est comprise entre une valeur max et min
+5) on va faire apparaitre l'envie sur l'écran
+6) l'envie de faire caca ne peut etre affichée que si le tama a mangé
+*/
+const wantsTo = (callback) => {
+    const needs = ["😋", "🥱", "💩"];
+    const minDuration = 1000;
+    const maxDuration = 3000;
+    const duration = getRandomInt({
+        min : minDuration, 
+        max : maxDuration});
+    setTimeout(() => {
+        const randomIndexNeeds = getRandomInt({
+            max : needs.length});
+        const desire = needs[randomIndexNeeds];
+        showInScreen(desire);
+        if (callback) {
+            callback();
+        }
+    }, duration);
+};
+
+
+// Fonction qui génère un nombre aléatoire compris entre un min et max
+const getRandomInt = (props) => {
+    const max = props.max;
+    // Ternaire : condition ? si vrai : si faux
+    const min = props.min ? props.min : 0;
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+// Fonction qui gere l'affichage des emoticone dans l'écran du tama
+const character = document.querySelector(".js-character");
+const showInScreen = (display) => {
+    character.textContent = display;
+};
+
+
+
+// Lance la fonction de début de mon tama
 Start();
