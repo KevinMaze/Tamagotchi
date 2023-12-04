@@ -16,6 +16,15 @@ Ses envies :
 - 💩 : caca, aléatoire minimum 30 sec et max 1.30 minutes uniquement après avoir mangé
 */
 
+const myTama = {
+    name : "",
+    alive : false,
+    fed : 0,
+    playfull : 0,
+    cleaned : 0,
+    lifeDuration : 0,
+};
+
 /* PHASE 0 : lancer le jeu 
 1) clicker sur le bouton du milieu
 2) quand on arrive à 5 click alors on fait naitre notre tama
@@ -27,7 +36,6 @@ const Start = () => {
     let count = 0;
     buttonCenter.addEventListener("click", () => {
         count++;
-        console.log(count);
         if (count === 5) {
             birth();
         }
@@ -43,7 +51,7 @@ const Start = () => {
  */
 const birth = () => {
     // 1) : demander le prénom
-    const tamaName = prompt("Quel est le prénom de votre Tamastudi ?");
+    myTama.name = prompt("Quel est le prénom de votre Tamastudi ?");
     // 2) : éclore l'oeuf
     showInScreen("🐣");
     // 3) : afficher les vitals
@@ -51,18 +59,25 @@ const birth = () => {
     vitals.classList.remove("hidden");
     // 4) : afficher le nom du personnage dans les vitals
     const nameDisplay = document.querySelector(".js-name");
-    nameDisplay.textContent = tamaName;
+    nameDisplay.textContent = myTama.name;
     // 5) mettre les scores des vitals à 5
+    const defaultScore = 5;
     const scoresDisplay = document.querySelectorAll(".js-score");
     scoresDisplay.forEach((score) => {
-        score.textContent = 5;
+        score.textContent = defaultScore;
     });
+    myTama.fed = defaultScore;
+    myTama.playfull = defaultScore;
+    myTama.cleaned = defaultScore;
     // 6) : faire apparaitre les actions
     const actions = document.querySelector(".js-actions");
     actions.classList.remove("hidden");
     // 7) appel de la fonction pour le faire grandir
     evolve();
+    // 9 ) Calcule de la durée de vie
+    lifeDuration();
 };
+
 
 /* PHASE 2 : faire grandir le tama 
 1) attendre que notre tamastudi ait une première envie
@@ -71,7 +86,8 @@ const birth = () => {
 const evolve = () => {
     // 1) attendre que notre tamastudi ait une première envie
     const functionToExecute = () => {
-        showInScreen("🥰")
+    // 2 ) calcule de son humeur
+    mood();
     };
     wantsTo(functionToExecute);
 };
@@ -105,6 +121,32 @@ const wantsTo = (callback) => {
     }, duration);
 };
 
+/* HUMEUR GENERAL
+Une fonction qui calcule la moyenne des 3 indicateurs (faim, ennui, propreté)
+Elle affiche cette moyenne dans les vitals
+*/
+const mood = () => {
+    // Affichage numérique de l'humeur
+    const average = Math.round((myTama.fed + myTama.playfull + myTama.cleaned) / 3);
+    const scoreDisplay = document.querySelector(".js-mood");
+    scoreDisplay.textContent = average;
+    // Affichage visuel de l'humeur
+    const listOfEmoji = ["😢", "🙁", "🙂", "😄", "🤗", "🥰"];
+    showInScreen(listOfEmoji[average]);
+};
+
+/* DUREE DE VIE 
+Une fonction qui toutes les minutes met à jour la durée de vie du tama
+*/
+const lifeDuration = () => {
+    const displayLifeDuration = document.querySelector(".js-life-duration");
+    const duration = 60_000; // 60 secondes
+    setInterval(() => {
+        myTama.lifeDuration++;;
+        displayLifeDuration.textContent = myTama.lifeDuration;
+    }, duration);
+};
+
 
 // Fonction qui génère un nombre aléatoire compris entre un min et max
 const getRandomInt = (props) => {
@@ -119,8 +161,6 @@ const character = document.querySelector(".js-character");
 const showInScreen = (display) => {
     character.textContent = display;
 };
-
-
 
 // Lance la fonction de début de mon tama
 Start();
